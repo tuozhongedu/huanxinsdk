@@ -12,7 +12,7 @@
 
 
 ## 信息相关
-[信息发送](src/Command/Message/Send.php)
+[信息发送](src/Command/Message/SendCommand.php)
 
 ## 消息附件
 
