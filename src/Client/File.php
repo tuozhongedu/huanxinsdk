@@ -57,6 +57,10 @@ class File extends BaseClient
 
         $body = $response->getBody();
 
+        $dirname = dirname($filename);
+        if (!file_exists($dirname)) {
+            mkdir($dirname, 0777, true);
+        }
         $fh = fopen($filename, 'wa');
         while (!$body->eof()) {
             fwrite($fh, $body->read(1024), 1024);
