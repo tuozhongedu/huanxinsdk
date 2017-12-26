@@ -55,10 +55,12 @@ class User extends BaseClient
      */
     public function getUser($username)
     {
-        return $this->client->get(
-            $this->buildUrl('/users'),
+        $response = $this->client->get(
+            $this->buildUrl(sprintf('/users/%s', $username)),
             $this->getRequestOptions()
-        )->json();
+        );
+
+        return $this->getJson($response);
     }
 
     /**
@@ -66,13 +68,17 @@ class User extends BaseClient
      *
      * @param  string $username
      * @param  string $password
+     *
+     * @return array
      */
     public function changePassword($username, $password)
     {
-        $this->client->put(
+        $response = $this->client->put(
             $this->buildUrl(sprintf('/users/%s/password', $username)),
             $this->getRequestOptions(['newpassword' => $password])
         );
+
+        return $this->getJson($response);
     }
 
     /**
@@ -80,12 +86,16 @@ class User extends BaseClient
      *
      * @param  string $username
      * @param  string $nickName
+     *
+     * @return array
      */
     public function changeNickName($username, $nickName)
     {
-        $this->client->push(
+        $response = $this->client->put(
             $this->buildUrl(sprintf('/users/%s', $username)),
             $this->getRequestOptions(['nickname' => $nickName])
         );
+
+        return $this->getJson($response);
     }
 }
