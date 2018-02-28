@@ -81,14 +81,16 @@ class Group extends BaseClient
     }
 
     /**
-     *　批量添加群组成员
-     * @param int $groupId
+     * 批量添加群组成员
+     * @param $groupId
+     * @param $members
+     * @return mixed
      */
-    public function addMembers($groupId)
+    public function addMembers($groupId, $members)
     {
         $options = $this->getRequestOptions();
 
-        $options['json'] = ['usernames' => $this->members];
+        $options['json'] = ['usernames' => $members];
         return $this->getJson($this->client->post(
             $this->buildUrl('/chatgroups/' . $groupId . '/users'),
             $options
@@ -97,13 +99,14 @@ class Group extends BaseClient
 
     /**
      * 移除群组成员
-     * @param  int $groupId
-     * @return array
+     * @param $groupId
+     * @param $members
+     * @return mixed
      */
-    public function removeMembers($groupId)
+    public function removeMembers($groupId, $members)
     {
         return $this->getJson($this->client->delete(
-            $this->buildUrl('/chatgroups/' . $groupId . '/users/' . implode(',', $this->members)),
+            $this->buildUrl('/chatgroups/' . $groupId . '/users/' . $members),
             $this->getRequestOptions()
         ));
     }
